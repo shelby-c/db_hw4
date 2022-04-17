@@ -16,11 +16,21 @@ display any table, but should instead display a descriptive message of the form 
 where XXXX is replaced by the given SID. 
 Use the filenames HW4 ShowPercentages.sql and HW4 ShowPercentages.php for this item.
 */
-WITH Scores AS (SELECT HW4_RawScore.SID AS SID, HW4_RawScore.Score AS Score, HW4_Assignment.PtsPoss AS PtsPoss
-                FROM HW4_Assignment LEFT OUTER JOIN HW4_RawScore
-                ON HW4_Assignment.AName =  HW4_RawScore.AName)
 
-SELECT
-FROM
-WHERE
+DELIMITER //
 
+DROP PROCEDURE IF EXISTS HW4_ShowRawScores //
+
+CREATE PROCEDURE HW4_ShowRawScores(IN Password VARCHAR(10))
+BEGIN
+    IF EXISTS(SELECT * FROM HW4_Password WHERE password = Password) THEN
+--   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"
+      SELECT HW4_Student.SID, HW4_Student.LName, HW4_Student.FName, HW4_Student.Sec, HW4_RawScore.AName, HW4_RawScore.Score
+      FROM HW4_Student LEFT OUTER JOIN HW4_RawScore
+      ON HW4_Student.SID = HW4_RawScore.SID;
+   ELSE
+       SELECT 'ERROR: Invalid password' AS SID;
+   END IF;
+END; //
+
+DELIMITER ;

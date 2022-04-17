@@ -5,7 +5,7 @@
     echo "<br>";
 
     // open a connection to dbase server
-    include 'open.php'; //  NEED TO WRITE conf.php WITH APPROPRIATE CREDENTIALS
+    include 'open.php'; 
 
     // collect the posted value in a variable called $item
 	$password = $_POST['password'];;
@@ -30,7 +30,7 @@
                }
             echo "</table>";
         } else {
-           echo "Call to HW4_AllCourseAverages failed<br>";
+           echo "Call to AllCourseAverages failed<br>";
         }
     } else {
         echo "not set";
