@@ -16,9 +16,9 @@ HW4 ShowRawScores.php for this item.
 
 DELIMITER //
 
-DROP PROCEDURE IF EXISTS ShowRawScores //
+DROP PROCEDURE IF EXISTS HW4_ShowRawScores //
 
-CREATE PROCEDURE ShowRawScores(IN sid VARCHAR(10))
+CREATE PROCEDURE HW4_ShowRawScores(IN sid VARCHAR(10))
 BEGIN
     IF EXISTS(SELECT * FROM HW4_Student WHERE SID = sid) THEN
 --   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"
