@@ -18,7 +18,9 @@
         // execute it, and if non-empty result, output each row of result
         if ($result = $conn->query("CALL HW4_ShowRawScores('".$SID."');")) {
             
+            echo "sandwich";
             echo $result;
+            echo "sandwich";
 
             echo "<table border=\"2px solid black\">";
             echo "<tr><td>Show Raw Scores SID</td><td>LName</td><td>FName</td><td>Sec</td><td>AName</td><td>Score</td></tr>";
