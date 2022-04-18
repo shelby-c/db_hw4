@@ -25,14 +25,16 @@ WHERE HW4_RawScore.AName = HW4_Assignment.AName;
 DROP VIEW IF EXISTS CourseAverage;
 
 CREATE VIEW CourseAverage AS
-SELECT AssignmentPercentages.SID AS SID, (SUM(SELECT AssignmentPercentages.AssignmentPercent
-                                              FROM AssignmentPercentages
-                                              WHERE AssignmentPercentages.AType = 'QUIZ') * 0.4 + 
-                                            SUM (SELECT AssignmentPercentages.AssignmentPercent
-                                                 FROM AssignmentPercentages
-                                                 WHERE AssignmentPercentages.AType = 'EXAM') * 0.6)  AS CourseAvg
-FROM AssignmentPercentages
-GROUP BY AssignmentPercentages.SID;
+SELECT AssignmentPercentages.SID AS SID, QuizPercentages * 0.4 + ExamPercentages * 0.6 AS CourseAvg
+FROM (SELECT SUM(AssignmentPercentages.AssignmentPercent)
+      FROM AssignmentPercentages
+      WHERE AssignmentPercentages.AType = 'EXAM'
+      GROUP BY AssignmentPercentages.SID) AS ExamPercentages, 
+                                (SELECT SUM(AssignmentPercentages.AssignmentPercent)
+                                FROM AssignmentPercentages
+                                WHERE AssignmentPercentages.AType = 'QUIZ'
+                                GROUP BY AssignmentPercentages.SID) AS QuizPercentages
+WHERE ExamPercentages.SID = QuizPercentages.SID;
 
 DROP PROCEDURE IF EXISTS HW4_AllCourseAverages //
 
