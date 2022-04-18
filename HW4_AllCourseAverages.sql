@@ -11,15 +11,26 @@ HW4 ShowAllCourseAverages.php for this item.
 
 DELIMITER //
 
+-- Get grades as a percentage for each assignment, course avg to be calculated as (points earned) / (total points possible)
+-- NEED TO ACCOUNT FOR UNATTEMPTED ASSIGNMENTS
+DROP VIEW IF EXISTS CourseAverage;
+
+CREATE VIEW CourseAverage AS
+SELECT HW4_RawScore.SID AS SID, (SUM(HW4_RawScore.Score) / SUM(HW4_Assignment.PtsPoss) AS CourseAvg
+FROM HW4_RawScore, HW4_Assignment
+WHERE HW4_RawScore.AName = HW4_Assignment.AName
+GROUP BY HW4_RawScore.SID;
+
 DROP PROCEDURE IF EXISTS HW4_AllCourseAverages //
 
 CREATE PROCEDURE HW4_AllCourseAverages(IN Password VARCHAR(10))
 BEGIN
-    IF EXISTS(SELECT * FROM HW4_Password WHERE password = Password) THEN
+    IF EXISTS(SELECT * FROM HW4_Password WHERE HW4_Password.CurPasswords = Password) THEN
 --   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"
-      SELECT HW4_Student.SID, HW4_Student.LName, HW4_Student.FName, HW4_Student.Sec, HW4_RawScore.AName, HW4_RawScore.Score
-      FROM HW4_Student LEFT OUTER JOIN HW4_RawScore
-      ON HW4_Student.SID = HW4_RawScore.SID;
+      SELECT HW4_Student.SID, HW4_Student.LName, HW4_Student.FName, HW4_Student.Sec, CourseAverage.CourseAvg
+      FROM HW4_Student LEFT OUTER JOIN CourseAverage
+      ON HW4_Student.SID = CourseAverage.SID;
+      ORDER BY HW4_Student.Sec ASC, courseAvg DESC, LName ASC, FName ASC;
    ELSE
        SELECT 'ERROR: Invalid password' AS SID;
    END IF;

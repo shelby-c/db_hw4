@@ -19,17 +19,18 @@ Use the filenames HW4 ShowPercentages.sql and HW4 ShowPercentages.php for this i
 
 DELIMITER //
 
-DROP PROCEDURE IF EXISTS HW4_ShowRawScores //
+DROP PROCEDURE IF EXISTS HW4_ShowPercentages //
 
-CREATE PROCEDURE HW4_ShowRawScores(IN Password VARCHAR(10))
+CREATE PROCEDURE HW4_ShowPercentages(IN sid VARCHAR(10))
 BEGIN
-    IF EXISTS(SELECT * FROM HW4_Password WHERE password = Password) THEN
+    IF EXISTS(SELECT * FROM HW4_Student WHERE SID = sid) THEN
 --   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"
       SELECT HW4_Student.SID, HW4_Student.LName, HW4_Student.FName, HW4_Student.Sec, HW4_RawScore.AName, HW4_RawScore.Score
       FROM HW4_Student LEFT OUTER JOIN HW4_RawScore
-      ON HW4_Student.SID = HW4_RawScore.SID;
+      ON HW4_Student.SID = HW4_RawScore.SID
+      WHERE HW4_Student.SID = sid;
    ELSE
-       SELECT 'ERROR: Invalid password' AS SID;
+       SELECT 'ERROR: SID ' + sid+ 'not found' AS SID;
    END IF;
 END; //
 
