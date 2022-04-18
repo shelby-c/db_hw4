@@ -18,7 +18,8 @@ BEGIN
 --   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"
       SELECT HW4_Student.SID, HW4_Student.LName, HW4_Student.FName, HW4_Student.Sec, HW4_RawScore.AName, HW4_RawScore.Score
       FROM HW4_Student LEFT OUTER JOIN HW4_RawScore
-      ON HW4_Student.SID = HW4_RawScore.SID;
+      ON HW4_Student.SID = HW4_RawScore.SID
+      ORDER BY HW4_Student.Sec ASC, HW4_Student.LName ASC, HW4_Student.FName ASC;
    ELSE
        SELECT 'ERROR: Invalid password' AS SID;
    END IF;

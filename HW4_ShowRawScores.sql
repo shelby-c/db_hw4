@@ -23,7 +23,7 @@ BEGIN
     IF EXISTS(SELECT * FROM HW4_Student WHERE SID = sid) THEN
 --   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"
       SELECT HW4_Student.SID, HW4_Student.LName, HW4_Student.FName, HW4_Student.Sec, HW4_RawScore.AName, HW4_RawScore.Score
-      FROM HW4_Student LEFT OUTER JOIN HW4_RawScore
+      FROM HW4_Student JOIN HW4_RawScore
       ON HW4_Student.SID = HW4_RawScore.SID
       WHERE HW4_Student.SID = sid;
    ELSE

@@ -19,6 +19,30 @@ Use the filenames HW4 ShowPercentages.sql and HW4 ShowPercentages.php for this i
 
 DELIMITER //
 
+-- Get grades as a percentage for each assignment
+-- NEED TO ACCOUNT FOR UNATTEMPTED ASSIGNMENTS
+DROP VIEW IF EXISTS AssignmentPercentages;
+
+CREATE VIEW AssignmentPercentages AS
+SELECT HW4_RawScore.SID AS SID, HW4_Assignment.AName AS AName, (HW4_RawScore.Score / HW4_Assignment.PtsPoss) AS AssignmentPercent, HW4_Assignment.AType AS AType
+FROM HW4_RawScore, HW4_Assignment
+WHERE HW4_RawScore.AName = HW4_Assignment.AName;
+
+-- Course avg to be calculated as (points earned) / (total points possible)
+-- NEED TO ACCOUNT FOR UNATTEMPTED ASSIGNMENTS
+DROP VIEW IF EXISTS CourseAverage;
+
+CREATE VIEW CourseAverage AS
+SELECT AssignmentPercentages.SID AS SID, (SUM(SELECT AssignmentPercentages.AssignmentPercent
+                                              FROM AssignmentPercentages
+                                              WHERE AssignmentPercentages.AType = 'QUIZ') * 0.4 + 
+                                            SUM (SELECT AssignmentPercentages.AssignmentPercent
+                                                 FROM AssignmentPercentages
+                                                 WHERE AssignmentPercentages.AType = 'EXAM') * 0.6)  AS CourseAvg
+FROM AssignmentPercentages
+GROUP BY AssignmentPercentages.SID;
+
+
 DROP PROCEDURE IF EXISTS HW4_ShowPercentages //
 
 CREATE PROCEDURE HW4_ShowPercentages(IN sid VARCHAR(10))
@@ -26,8 +50,8 @@ BEGIN
     IF EXISTS(SELECT * FROM HW4_Student WHERE SID = sid) THEN
 --   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"
       SELECT HW4_Student.SID, HW4_Student.LName, HW4_Student.FName, HW4_Student.Sec, HW4_RawScore.AName, HW4_RawScore.Score
-      FROM HW4_Student LEFT OUTER JOIN HW4_RawScore
-      ON HW4_Student.SID = HW4_RawScore.SID
+      FROM HW4_Student JOIN AssignmentPercentages
+      ON HW4_Student.SID = AssignmentPercentages.SID
       WHERE HW4_Student.SID = sid;
    ELSE
        SELECT 'ERROR: SID ' + sid+ 'not found' AS SID;
