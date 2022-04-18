@@ -34,7 +34,7 @@
                   echo "<td>".$row["AName"]."</td>";
                   echo "<td>".$row["Score"]."</td>";
                   echo "</tr>";
-                  echo $row;
+                  
                }
             echo "</table>";
         } else {
