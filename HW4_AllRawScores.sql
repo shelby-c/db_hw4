@@ -10,9 +10,9 @@ Use the filenames HW4 ShowAllRawScores.sql and HW4 ShowAllRawScores.php for this
 
 DELIMITER //
 
-DROP PROCEDURE IF EXISTS HW4_ShowRawScores //
+DROP PROCEDURE IF EXISTS HW4_AllRawScores //
 
-CREATE PROCEDURE HW4_ShowRawScores(IN Password VARCHAR(10))
+CREATE PROCEDURE HW4_AllRawScores(IN Password VARCHAR(10))
 BEGIN
     IF EXISTS(SELECT * FROM HW4_Password WHERE HW4_Password.CurPasswords = Password) THEN
 --   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"

@@ -16,7 +16,7 @@
         echo $password;
 	    echo "<br><br>";
         // execute it, and if non-empty result, output each row of result
-        if ($result = $conn->query("CALL HW4_ShowRawScores('".$password."');")) {
+        if ($result = $conn->query("CALL HW4_AllRawScores('".$password."');")) {
  
             echo "<table border=\"2px solid black\">";
             echo "<tr><td>SID</td><td>LName</td><td>FName</td><td>Sec</td><td>AName</td><td>Score</td></tr>";
@@ -32,7 +32,7 @@
                }
             echo "</table>";
         } else {
-           echo "Call to ShowRawScores failed<br>";
+           echo "Call to AllRawScores failed<br>";
         }
     } else {
         echo "not set";
