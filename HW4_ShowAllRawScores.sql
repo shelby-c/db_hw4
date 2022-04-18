@@ -1,4 +1,4 @@
--- HW4_AllRawScores.sql
+-- HW4_ShowAllRawScores.sql
 /*
 If given any valid password present in the HW4 passwords table, display a table showing the raw scores for all 
 students in the course, sorted in ascending order by section number, then last name and finally first name. 

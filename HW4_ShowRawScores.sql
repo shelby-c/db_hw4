@@ -13,7 +13,6 @@ where XXXX is replaced by the given SID. Use the filenames HW4 ShowRawScores.sql
 HW4 ShowRawScores.php for this item. 
 */
 
-
 DELIMITER //
 
 DROP PROCEDURE IF EXISTS HW4_ShowRawScores //
