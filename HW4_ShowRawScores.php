@@ -22,7 +22,7 @@
             echo "<tr><td>SID</td><td>LName</td><td>FName</td><td>Sec</td><td>AName</td><td>Score</td></tr>";
                foreach($result as $row){
                   echo "<tr>";
-                  echo "<td>".$row["SID"]."</td>";
+                  echo "<td>".$row["Show Raw Scores SID"]."</td>";
                   echo "<td>".$row["LName"]."</td>";
                   echo "<td>".$row["FName"]."</td>";
                   echo "<td>".$row["Sec"]."</td>";
