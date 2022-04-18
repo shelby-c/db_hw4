@@ -21,7 +21,7 @@ BEGIN
       ON HW4_Student.SID = HW4_RawScore.SID
       ORDER BY HW4_Student.Sec ASC, HW4_Student.LName ASC, HW4_Student.FName ASC;
    ELSE
-       SELECT 'ERROR: Invalid password (all raw scores)';
+       SELECT '(all raw scores) ERROR: Invalid password' AS SID;
    END IF;
 END; //
 
