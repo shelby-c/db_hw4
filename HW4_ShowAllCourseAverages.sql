@@ -9,8 +9,6 @@ HW4 ShowAllCourseAverages.php for this item.
 */
 
 
-DELIMITER //
-
 -- Get grades as a percentage for each assignment
 -- NEED TO ACCOUNT FOR UNATTEMPTED ASSIGNMENTS
 DROP VIEW IF EXISTS AssignmentPercentages;
@@ -30,11 +28,13 @@ FROM (SELECT SUM(AssignmentPercentages.AssignmentPercent)
       FROM AssignmentPercentages
       WHERE AssignmentPercentages.AType = 'EXAM'
       GROUP BY AssignmentPercentages.SID) AS ExamPercentages, 
-                                (SELECT SUM(AssignmentPercentages.AssignmentPercent)
-                                FROM AssignmentPercentages
-                                WHERE AssignmentPercentages.AType = 'QUIZ'
-                                GROUP BY AssignmentPercentages.SID) AS QuizPercentages
+      SELECT SUM(AssignmentPercentages.AssignmentPercent)
+      FROM AssignmentPercentages
+      WHERE AssignmentPercentages.AType = 'QUIZ'
+      GROUP BY AssignmentPercentages.SID) AS QuizPercentages
 WHERE ExamPercentages.SID = QuizPercentages.SID;
+
+DELIMITER //
 
 DROP PROCEDURE IF EXISTS HW4_AllCourseAverages //
 
