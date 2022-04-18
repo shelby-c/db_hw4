@@ -18,13 +18,14 @@
         // execute it, and if non-empty result, output each row of result
         if ($result = $conn->query("CALL HW4_ShowRawScores('".$SID."');")) {
             
-            echo "sandwich1";
-            echo $result;
-            echo "sandwich2";
+            //echo "hi1";
+            //echo $result;
+            //echo "hi2";
 
             echo "<table border=\"2px solid black\">";
             echo "<tr><td>Show Raw Scores SID</td><td>LName</td><td>FName</td><td>Sec</td><td>AName</td><td>Score</td></tr>";
                foreach($result as $row){
+                   /*
                   echo "<tr>";
                   echo "<td>".$row["SID"]."</td>";
                   echo "<td>".$row["LName"]."</td>";
@@ -32,7 +33,8 @@
                   echo "<td>".$row["Sec"]."</td>";
                   echo "<td>".$row["AName"]."</td>";
                   echo "<td>".$row["Score"]."</td>";
-                  echo "</tr>";
+                  echo "</tr>";*/
+                  echo $row;
                }
             echo "</table>";
         } else {
