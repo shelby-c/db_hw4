@@ -1,7 +1,7 @@
- <head><title>HW4 Show Raw Score</title></head>
+ <head><title>HW4 Show Percentages</title></head>
  <body>
 <?php 
-    echo "<h2>HW4 Show Raw Score</h2>";
+    echo "<h2>HW4 Show Percentages</h2>";
     echo "<br>";
 
     // open a connection to dbase server

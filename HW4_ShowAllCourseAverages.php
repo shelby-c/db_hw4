@@ -1,7 +1,7 @@
- <head><title>HW4 All Course Averages</title></head>
+ <head><title>HW4 Show All Course Averages</title></head>
  <body>
 <?php 
-    echo "<h2>HW4 All Course Averages</h2>";
+    echo "<h2>HW4 Show All Course Averages</h2>";
     echo "<br>";
 
     // open a connection to dbase server
