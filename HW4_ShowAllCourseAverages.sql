@@ -45,7 +45,7 @@ BEGIN
       ON HW4_Student.SID = CourseAverage.SID;
       ORDER BY HW4_Student.Sec ASC, CourseAverage.CourseAvg DESC, HW4_Student.LName ASC, HW4_Student.FName ASC;
    ELSE
-       SELECT 'ERROR: Invalid password (all course averages)' AS SID;
+       SELECT '(all course averages) ERROR: Invalid password' AS SID;
    END IF;
 END; //
 
