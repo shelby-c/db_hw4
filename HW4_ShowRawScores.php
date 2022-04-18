@@ -19,10 +19,10 @@
         if ($result = $conn->query("CALL HW4_ShowRawScores('".$SID."');")) {
  
             echo "<table border=\"2px solid black\">";
-            echo "<tr><td>SID</td><td>LName</td><td>FName</td><td>Sec</td><td>AName</td><td>Score</td></tr>";
+            echo "<tr><td>Show Raw Scores SID</td><td>LName</td><td>FName</td><td>Sec</td><td>AName</td><td>Score</td></tr>";
                foreach($result as $row){
                   echo "<tr>";
-                  echo "<td>".$row["Show Raw Scores SID"]."</td>";
+                  echo "<td>".$row["SID"]."</td>";
                   echo "<td>".$row["LName"]."</td>";
                   echo "<td>".$row["FName"]."</td>";
                   echo "<td>".$row["Sec"]."</td>";
