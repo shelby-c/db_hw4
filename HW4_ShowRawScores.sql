@@ -23,7 +23,7 @@ BEGIN
 --   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"
       -- SELECT 'test' AS SID;
       WITH EveryAssignment AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_Assignment.AName AS AName
-                                FROM HW4_Student JOIN HW4_Assignment) -- all students matched with all assignments
+                                FROM HW4_Student FULL OUTER JOIN HW4_Assignment) -- all students matched with all assignments
       SELECT EveryAssignment.SID, EveryAssignment.LName, EveryAssignment.FName, EveryAssignment.Sec, EveryAssignment.AName, HW4_RawScore.Score
       FROM EveryAssignment LEFT OUTER JOIN HW4_RawScore
         ON HW4_RawScore.AName = EveryAssignment.AName AND EveryAssignment.SID = HW4_RawScore.SID
