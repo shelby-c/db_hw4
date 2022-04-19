@@ -15,8 +15,8 @@ DROP VIEW IF EXISTS AssignmentPercentages;
 
 CREATE VIEW AssignmentPercentages AS
 SELECT HW4_RawScore.SID AS SID, HW4_Assignment.AName AS AName, (HW4_RawScore.Score / HW4_Assignment.PtsPoss) * 100 AS AssignmentPercent, HW4_Assignment.AType AS AType
-FROM HW4_RawScore, HW4_Assignment
-WHERE HW4_RawScore.AName = HW4_Assignment.AName;
+FROM HW4_RawScore RIGHT OUTER JOIN HW4_Assignment
+ON HW4_RawScore.AName = HW4_Assignment.AName;
 
 -- Course avg to be calculated as (points earned) / (total points possible)
 -- NEED TO ACCOUNT FOR UNATTEMPTED ASSIGNMENTS
