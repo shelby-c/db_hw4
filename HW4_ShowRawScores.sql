@@ -26,7 +26,7 @@ BEGIN
       FROM HW4_RawScore
       JOIN HW4_Student
         ON HW4_Student.SID = HW4_RawScore.SID
-      RIGHT JOIN HW4_Assignment
+      RIGHT OUTER JOIN HW4_Assignment
         ON HW4_RawScore.AName = HW4_Assignment.AName
       WHERE HW4_Student.SID = sid;
    ELSE
