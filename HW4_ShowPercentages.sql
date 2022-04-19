@@ -54,7 +54,7 @@ BEGIN
       ON HW4_Student.SID = AssignmentPercentages.SID
       WHERE HW4_Student.SID = sid;
    ELSE
-       SELECT 'ERROR: SID ' + sid+ 'not found' AS SID;
+       SELECT CONCAT('ERROR: SID ', sid, ' not found') AS SID;
    END IF;
 END; //
 
