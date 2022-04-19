@@ -35,8 +35,8 @@ BEGIN
                              WHERE HW4_Student.SID = HW4_RawScore.SID AND HW4_Student.SID = sid) -- all students matched with scores for assignments they attempted
       SELECT StudentScores.SID, StudentScores.LName, StudentScores.FName, StudentScores.Sec, HW4_Assignment.AName, StudentScores.Score
       FROM StudentScores RIGHT OUTER JOIN HW4_Assignment
-        ON StudentScores.AName = HW4_Assignment.AName
-      WHERE StudentScores.SID = sid;
+        ON StudentScores.AName = HW4_Assignment.AName;
+      -- WHERE StudentScores.SID = sid;
 
       /*
         SELECT WithSID.SID, WithSID.LName, WithSID.FName, WithSID.Sec, HW4_Assignment.AName, WithSID.Score
