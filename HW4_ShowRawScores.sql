@@ -36,7 +36,7 @@ BEGIN
       SELECT StudentScores.SID, StudentScores.LName, StudentScores.FName, StudentScores.Sec, HW4_Assignment.AName, StudentScores.Score
       FROM (SELECT * 
             FROM StudentScores
-            WHERE StudentScores.SID = sid) RIGHT OUTER JOIN HW4_Assignment
+            WHERE StudentScores.SID = sid) AS WithSID RIGHT OUTER JOIN HW4_Assignment
         ON StudentScores.AName = HW4_Assignment.AName;
    ELSE
       SELECT CONCAT('ERROR: SID ', sid, ' not found') AS SID;
