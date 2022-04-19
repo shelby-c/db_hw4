@@ -71,7 +71,7 @@ BEGIN
    -- in place so we can plug in the specific sid value in a careful way
    SET @sql = CONCAT('SELECT sid, LName, FName, Sec, ',
                      @sql,
-                     ' FROM HW4_RawScore, HW4_Student WHERE sid = ',
+                     ' FROM HW4_RawScore, HW4_Student WHERE HW4_Student.SID = HW4_RawScore.SID AND sid = ',
 		     '?');
 
    -- alert the server we have a statement shell to set up
