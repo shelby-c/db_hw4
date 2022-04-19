@@ -28,7 +28,7 @@ FROM (SELECT AVG(IFNULL(AssignmentPercentages.AssignmentPercent, 0)) AS ExamAvg,
       FROM AssignmentPercentages
       WHERE AssignmentPercentages.AType = 'EXAM'
       GROUP BY AssignmentPercentages.SID) AS ExamPercentages
-      LEFT OUTER JOIN 
+      FULL OUTER JOIN 
       (SELECT AVG(IFNULL(AssignmentPercentages.AssignmentPercent, 0)) AS QuizAvg, AssignmentPercentages.SID AS SID
       FROM AssignmentPercentages
       WHERE AssignmentPercentages.AType = 'QUIZ'
