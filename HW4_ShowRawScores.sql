@@ -19,7 +19,7 @@ DROP PROCEDURE IF EXISTS HW4_ShowRawScores //
 
 CREATE PROCEDURE HW4_ShowRawScores(IN sid VARCHAR(4))
 BEGIN
-    IF EXISTS(SELECT * FROM HW4_Student WHERE HW4_Student.SID = sid) THEN
+   -- IF EXISTS(SELECT * FROM HW4_Student WHERE HW4_Student.SID = sid) THEN
 --   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"
       /*WITH EveryAssignment AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_Assignment.AName AS AName
                                 FROM HW4_Student CROSS JOIN HW4_Assignment) -- all students matched with all assignments
@@ -30,12 +30,12 @@ BEGIN
 
 
       -- try 2
-      WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.Score AS Score, HW4_RawScore.AName AS AName
+     /* WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.Score AS Score, HW4_RawScore.AName AS AName
                              FROM HW4_Student, HW4_RawScore
                              WHERE HW4_Student.SID = HW4_RawScore.SID AND HW4_Student.SID = sid) -- all students matched with scores for assignments they attempted
       SELECT StudentScores.SID, StudentScores.LName, StudentScores.FName, StudentScores.Sec, HW4_Assignment.AName, StudentScores.Score
-      FROM StudentScores CROSS JOIN HW4_Assignment
-      WHERE StudentScores.AName = HW4_Assignment.AName;
+      FROM StudentScores RIGHT OUTER JOIN HW4_Assignment
+        ON StudentScores.AName = HW4_Assignment.AName;*/
       -- WHERE StudentScores.SID = sid;
 
       /*
@@ -45,9 +45,41 @@ BEGIN
             WHERE StudentScores.SID = sid) AS WithSID RIGHT OUTER JOIN HW4_Assignment
         ON WithSID.AName = HW4_Assignment.AName;
       */
-   ELSE
+   /*ELSE
       SELECT CONCAT('ERROR: SID ', sid, ' not found') AS SID;
-   END IF;
+   END IF;*/
+      SET @sql = NULL;
+
+   -- accumulate into the variable named @sql a list of assignment names
+   -- and expressions to that will get the associated scores, for use 
+   -- as part of a later query of table HW4_RawScore
+   SELECT
+     GROUP_CONCAT(DISTINCT
+       CONCAT(
+         'max(case when aname = ''',
+         aname,
+         ''' then score end) as ''',aname,''''
+       )
+       ORDER BY atype DESC, aname ASC
+     ) INTO @sql
+   FROM HW4_Assignment;
+
+   -- concatenate the assignment name list and associated expressions
+   -- into a larger query string so we can execute it, but leave ?
+   -- in place so we can plug in the specific sid value in a careful way
+   SET @sql = CONCAT('SELECT sid, ',
+                     @sql,
+                     ' FROM HW4_RawScore WHERE sid = ',
+		     '?');
+
+   -- alert the server we have a statement shell to set up
+   PREPARE stmt FROM @sql;
+
+   -- now execute the statement shell with a value plugged in for the ?
+   EXECUTE stmt USING sid;
+
+   -- tear down the prepared shell since no longer needed (we won't requery it)
+   DEALLOCATE PREPARE stmt;
 END; //
 
 DELIMITER ;
