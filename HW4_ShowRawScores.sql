@@ -57,14 +57,14 @@ BEGIN
    -- as part of a later query of table HW4_RawScore
    SELECT
      GROUP_CONCAT(DISTINCT
-       CONCAT('SID', 'LName', 'FName', 'Sec',
+       CONCAT(
          'max(case when aname = ''',
          aname,
          ''' then score end) as ''',aname,''''
        )
        ORDER BY atype DESC, aname ASC
      ) INTO @sql
-   FROM HW4_Assignment, HW4_Student;
+   FROM HW4_Assignment;
 
    -- concatenate the assignment name list and associated expressions
    -- into a larger query string so we can execute it, but leave ?
