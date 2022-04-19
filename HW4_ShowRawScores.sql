@@ -22,13 +22,13 @@ BEGIN
     IF EXISTS(SELECT * FROM HW4_Student WHERE HW4_Student.SID = sid) THEN
 --   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"
       -- SELECT 'test' AS SID;
-      SELECT HW4_Student.SID, HW4_Student.LName, HW4_Student.FName, HW4_Student.Sec, HW4_Assignment.AName, HW4_RawScore.Score
-      FROM HW4_Student
-      FULL OUTER JOIN HW4_Assignment
-        ON HW4_Student.AName = HW4_Assignment.AName
-      JOIN HW4_RawScore
-        ON HW4_Student.SID = HW4_RawScore.SID AND HW4_RawScore.AName = HW4_Assignment.AName
-      WHERE HW4_Student.SID = sid;
+      WITH EveryAssignment AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_Assignment.AName AS AName
+                                FROM FROM HW4_Student JOIN HW4_Assignment 
+                                ON HW4_Student.AName = HW4_Assignment.AName)
+      SELECT EveryAssignment.SID, EveryAssignment.LName, EveryAssignment.FName, EveryAssignment.Sec, EveryAssignment.AName, HW4_RawScore.Score
+      FROM EveryAssignment JOIN HW4_RawScore
+        ON HW4_RawScore.AName = EveryAssignment.AName AND EveryAssignment.SID = HW4_RawScore.SID
+      WHERE HW4_RawScore.SID = sid;
    ELSE
       SELECT CONCAT('ERROR: SID ', sid, ' not found') AS SID;
    END IF;
