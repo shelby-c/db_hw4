@@ -14,7 +14,7 @@ HW4 ShowAllCourseAverages.php for this item.
 DROP VIEW IF EXISTS AssignmentPercentages;
 
 CREATE VIEW AssignmentPercentages AS
-SELECT HW4_RawScore.SID AS SID, HW4_Assignment.AName AS AName, (HW4_RawScore.Score / HW4_Assignment.PtsPoss) AS AssignmentPercent, HW4_Assignment.AType AS AType
+SELECT HW4_RawScore.SID AS SID, HW4_Assignment.AName AS AName, (HW4_RawScore.Score / HW4_Assignment.PtsPoss) * 100 AS AssignmentPercent, HW4_Assignment.AType AS AType
 FROM HW4_RawScore, HW4_Assignment
 WHERE HW4_RawScore.AName = HW4_Assignment.AName;
 
@@ -23,7 +23,7 @@ WHERE HW4_RawScore.AName = HW4_Assignment.AName;
 DROP VIEW IF EXISTS CourseAverage;
 
 CREATE VIEW CourseAverage AS
-SELECT ExamPercentages.SID AS SID, QuizSum * 0.4 + ExamSum * 0.6 AS CourseAvg
+SELECT ExamPercentages.SID AS SID, (QuizSum / (SELECT COUNT(*) FROM QuizPercentages)) * 0.4 + (ExamSum / (SELECT COUNT(*)) * 0.6) AS CourseAvg
 FROM (SELECT SUM(AssignmentPercentages.AssignmentPercent) AS ExamSum, AssignmentPercentages.SID AS SID
       FROM AssignmentPercentages
       WHERE AssignmentPercentages.AType = 'EXAM'
