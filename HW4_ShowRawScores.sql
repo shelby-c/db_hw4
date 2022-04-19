@@ -48,21 +48,23 @@ BEGIN
    /*ELSE
       SELECT CONCAT('ERROR: SID ', sid, ' not found') AS SID;
    END IF;*/
-      SET @sql = NULL;
+    
+   --  MODIFIED CODE FROM 4/19 CLASS
+   SET @sql = NULL;
 
    -- accumulate into the variable named @sql a list of assignment names
    -- and expressions to that will get the associated scores, for use 
    -- as part of a later query of table HW4_RawScore
    SELECT
      GROUP_CONCAT(DISTINCT
-       CONCAT(
+       CONCAT('SID', 'LName', 'FName', 'Sec',
          'max(case when aname = ''',
          aname,
          ''' then score end) as ''',aname,''''
        )
        ORDER BY atype DESC, aname ASC
      ) INTO @sql
-   FROM HW4_Assignment;
+   FROM HW4_Assignment, HW4_Student;
 
    -- concatenate the assignment name list and associated expressions
    -- into a larger query string so we can execute it, but leave ?
