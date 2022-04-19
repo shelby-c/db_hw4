@@ -11,7 +11,7 @@
 	$SID = $_POST['SID'];;
 
     // prepare query statement
-    echo "The SID collected from the form was ";
+    echo "SID: ";
     if(!empty($SID)) {
         echo $SID;
 	    echo "<br><br>";
