@@ -22,21 +22,21 @@ BEGIN
     IF EXISTS(SELECT * FROM HW4_Student WHERE HW4_Student.SID = sid) THEN
 --   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"
       -- SELECT 'test' AS SID;
-     /* WITH EveryAssignment AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_Assignment.AName AS AName
+      WITH EveryAssignment AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_Assignment.AName AS AName
                                 FROM HW4_Student CROSS JOIN HW4_Assignment) -- all students matched with all assignments
       SELECT EveryAssignment.SID, EveryAssignment.LName, EveryAssignment.FName, EveryAssignment.Sec, EveryAssignment.AName, HW4_RawScore.Score
       FROM EveryAssignment LEFT OUTER JOIN HW4_RawScore
         ON HW4_RawScore.AName = EveryAssignment.AName AND EveryAssignment.SID = HW4_RawScore.SID
-      WHERE HW4_RawScore.SID = sid;*/
+      WHERE HW4_RawScore.SID = sid;
 
 
       -- try 2
-      WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.Score AS Score
+      /*WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.Score AS Score
                                 FROM HW4_Student JOIN HW4_RawScore
                                 ON HW4_Student.SID = HW4_RawScore.SID) -- all students matched with scores for assignments they attempted
       SELECT StudentScores.SID, StudentScores.LName, StudentScores.FName, StudentScores.Sec, HW4_Assignment.AName, StudentScores.Score
       FROM StudentScores RIGHT OUTER JOIN HW4_Assignment
-        ON StudentScores.AName = HW4_Assignment.AName;
+        ON StudentScores.AName = HW4_Assignment.AName;*/
    ELSE
       SELECT CONCAT('ERROR: SID ', sid, ' not found') AS SID;
    END IF;
