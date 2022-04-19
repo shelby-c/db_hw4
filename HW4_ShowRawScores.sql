@@ -50,7 +50,7 @@ BEGIN
    END IF;*/
     
    --  MODIFIED CODE FROM 4/19 CLASS
-   SET @sql = NULL;
+     SET @sql = NULL;
 
    -- accumulate into the variable named @sql a list of assignment names
    -- and expressions to that will get the associated scores, for use 
@@ -69,7 +69,7 @@ BEGIN
    -- concatenate the assignment name list and associated expressions
    -- into a larger query string so we can execute it, but leave ?
    -- in place so we can plug in the specific sid value in a careful way
-   SET @sql = CONCAT('SELECT sid ',
+   SET @sql = CONCAT('SELECT sid, ',
                      @sql,
                      ' FROM HW4_RawScore WHERE sid = ',
 		     '?');
