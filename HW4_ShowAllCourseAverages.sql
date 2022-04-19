@@ -24,11 +24,11 @@ DROP VIEW IF EXISTS CourseAverage;
 
 CREATE VIEW CourseAverage AS
 SELECT ExamPercentages.SID AS SID, QuizSum * 0.4 + ExamSum * 0.6 AS CourseAvg
-FROM (SELECT SUM(AssignmentPercentages.AssignmentPercent) AS ExamSum, AssignmentPercentages.SID
+FROM (SELECT SUM(AssignmentPercentages.AssignmentPercent) AS ExamSum, AssignmentPercentages.SID AS SID
       FROM AssignmentPercentages
       WHERE AssignmentPercentages.AType = 'EXAM'
       GROUP BY AssignmentPercentages.SID) AS ExamPercentages, 
-      (SELECT SUM(AssignmentPercentages.AssignmentPercent) AS QuizSum
+      (SELECT SUM(AssignmentPercentages.AssignmentPercent) AS QuizSum, AssignmentPercentages.SID AS SID
       FROM AssignmentPercentages
       WHERE AssignmentPercentages.AType = 'QUIZ'
       GROUP BY AssignmentPercentages.SID) AS QuizPercentages
