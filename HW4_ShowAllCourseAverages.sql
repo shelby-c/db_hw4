@@ -44,7 +44,7 @@ BEGIN
 --   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"
       SELECT HW4_Student.SID, HW4_Student.LName, HW4_Student.FName, HW4_Student.Sec, CourseAverage.CourseAvg
       FROM HW4_Student JOIN CourseAverage
-      ON HW4_Student.SID = CourseAverage.SID;
+      ON HW4_Student.SID = CourseAverage.SID
       ORDER BY HW4_Student.Sec ASC, CourseAverage.CourseAvg DESC, HW4_Student.LName ASC, HW4_Student.FName ASC;
    ELSE
        SELECT '(all course averages) ERROR: Invalid password' AS SID;
