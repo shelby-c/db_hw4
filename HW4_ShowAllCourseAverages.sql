@@ -27,12 +27,13 @@ SELECT ExamPercentages.SID AS SID, QuizAvg * 0.4 + ExamAvg * 0.6 AS CourseAvg
 FROM (SELECT AVG(AssignmentPercentages.AssignmentPercent) AS ExamAvg, AssignmentPercentages.SID AS SID
       FROM AssignmentPercentages
       WHERE AssignmentPercentages.AType = 'EXAM'
-      GROUP BY AssignmentPercentages.SID) AS ExamPercentages, 
+      GROUP BY AssignmentPercentages.SID) AS ExamPercentages
+      JOIN 
       (SELECT AVG(AssignmentPercentages.AssignmentPercent) AS QuizAvg, AssignmentPercentages.SID AS SID
       FROM AssignmentPercentages
       WHERE AssignmentPercentages.AType = 'QUIZ'
       GROUP BY AssignmentPercentages.SID) AS QuizPercentages
-WHERE ExamPercentages.SID = QuizPercentages.SID;
+ON ExamPercentages.SID = QuizPercentages.SID;
 
 DELIMITER //
 
