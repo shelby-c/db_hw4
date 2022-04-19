@@ -57,19 +57,19 @@ BEGIN
    -- as part of a later query of table HW4_RawScore
    SELECT
      GROUP_CONCAT(DISTINCT
-       CONCAT(LName, ' ', FName, ' ', Sec,
+       CONCAT(
          'max(case when aname = ''',
          aname,
          ''' then score end) as ''',aname,''''
        )
        ORDER BY atype DESC, aname ASC
      ) INTO @sql
-   FROM HW4_Assignment, HW4_Student;
+   FROM HW4_Assignment;
 
    -- concatenate the assignment name list and associated expressions
    -- into a larger query string so we can execute it, but leave ?
    -- in place so we can plug in the specific sid value in a careful way
-   SET @sql = CONCAT('SELECT sid, ',
+   SET @sql = CONCAT('SELECT sid, LName, FName, Sec, ',
                      @sql,
                      ' FROM HW4_RawScore, HW4_Student WHERE sid = ',
 		     '?');
