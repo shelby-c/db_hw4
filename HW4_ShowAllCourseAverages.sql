@@ -28,7 +28,19 @@ FROM (SELECT AVG(IFNULL(AssignmentPercentages.AssignmentPercent, 0)) AS ExamAvg,
       FROM AssignmentPercentages
       WHERE AssignmentPercentages.AType = 'EXAM'
       GROUP BY AssignmentPercentages.SID) AS ExamPercentages
-      FULL OUTER JOIN 
+      LEFT OUTER JOIN 
+      (SELECT AVG(IFNULL(AssignmentPercentages.AssignmentPercent, 0)) AS QuizAvg, AssignmentPercentages.SID AS SID
+      FROM AssignmentPercentages
+      WHERE AssignmentPercentages.AType = 'QUIZ'
+      GROUP BY AssignmentPercentages.SID) AS QuizPercentages
+ON ExamPercentages.SID = QuizPercentages.SID
+UNION
+SELECT ExamPercentages.SID AS SID, COALESCE(QuizAvg, 0) * 0.4 + COALESCE(ExamAvg, 0) * 0.6 AS CourseAvg
+FROM (SELECT AVG(IFNULL(AssignmentPercentages.AssignmentPercent, 0)) AS ExamAvg, AssignmentPercentages.SID AS SID
+      FROM AssignmentPercentages
+      WHERE AssignmentPercentages.AType = 'EXAM'
+      GROUP BY AssignmentPercentages.SID) AS ExamPercentages
+      RIGHT OUTER JOIN 
       (SELECT AVG(IFNULL(AssignmentPercentages.AssignmentPercent, 0)) AS QuizAvg, AssignmentPercentages.SID AS SID
       FROM AssignmentPercentages
       WHERE AssignmentPercentages.AType = 'QUIZ'
