@@ -20,7 +20,7 @@ ON HW4_RawScore.AName = HW4_Assignment.AName;
 
 -- Course avg to be calculated as (points earned) / (total points possible)
 -- NEED TO ACCOUNT FOR UNATTEMPTED ASSIGNMENTS
-DROP VIEW IF EXISTS CourseAverage;
+DROP VIEW IF EXISTS CourseAverage; -- course avg for 1006 should be 78.3999
 
 CREATE VIEW CourseAverage AS
 SELECT ExamPercentages.SID AS SID, COALESCE(QuizAvg, 0) * 0.4 + COALESCE(ExamAvg, 0) * 0.6 AS CourseAvg
