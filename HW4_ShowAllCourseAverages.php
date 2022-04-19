@@ -24,8 +24,8 @@
                   echo "<td>".$row["SID"]."</td>";
                   echo "<td>".$row["LName"]."</td>";
                   echo "<td>".$row["FName"]."</td>";
-                  echo "<td>".$row["section"]."</td>";
-                  echo "<td>".$row["courseAvg"]."</td>";
+                  echo "<td>".$row["Sec"]."</td>";
+                  echo "<td>".$row["CourseAvg"]."</td>";
                   echo "</tr>";
                }
             echo "</table>";
