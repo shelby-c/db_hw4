@@ -35,7 +35,8 @@ BEGIN
                              ON HW4_Student.SID = HW4_RawScore.SID) -- all students matched with scores for assignments they attempted
       SELECT StudentScores.SID, StudentScores.LName, StudentScores.FName, StudentScores.Sec, HW4_Assignment.AName, StudentScores.Score
       FROM StudentScores RIGHT OUTER JOIN HW4_Assignment
-        ON StudentScores.AName = HW4_Assignment.AName;
+        ON StudentScores.AName = HW4_Assignment.AName
+      WHERE HW4_RawScore.SID = sid;
    ELSE
       SELECT CONCAT('ERROR: SID ', sid, ' not found') AS SID;
    END IF;

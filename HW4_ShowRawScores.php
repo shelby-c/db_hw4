@@ -43,7 +43,7 @@
     } else {
         echo "not set";
     }
-    echo ".<br>";
+    echo "<br>";
 
     
     $conn->close();
