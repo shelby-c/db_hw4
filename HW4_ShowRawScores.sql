@@ -69,9 +69,9 @@ BEGIN
    -- concatenate the assignment name list and associated expressions
    -- into a larger query string so we can execute it, but leave ?
    -- in place so we can plug in the specific sid value in a careful way
-   SET @sql = CONCAT('SELECT sid, LName, FName, Sec, ',
+   SET @sql = CONCAT('SELECT sid ',
                      @sql,
-                     ' FROM HW4_RawScore, HW4_Student WHERE sid = ',
+                     ' FROM HW4_RawScore WHERE sid = ',
 		     '?');
 
    -- alert the server we have a statement shell to set up
