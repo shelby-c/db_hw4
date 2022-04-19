@@ -27,7 +27,7 @@ BEGIN
       ON HW4_Student.SID = HW4_RawScore.SID
       WHERE HW4_Student.SID = sid;
    ELSE
-      SELECT CONCAT('ERROR: SID ', sid, ' not found' AS SID; -- check this
+      SELECT CONCAT('ERROR: SID ', sid, ' not found') AS SID; -- check this
    END IF;
 END; //
 
