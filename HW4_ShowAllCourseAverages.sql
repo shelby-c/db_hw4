@@ -28,7 +28,7 @@ FROM (SELECT SUM(AssignmentPercentages.AssignmentPercent)
       FROM AssignmentPercentages
       WHERE AssignmentPercentages.AType = 'EXAM'
       GROUP BY AssignmentPercentages.SID) AS ExamPercentages, 
-      SELECT SUM(AssignmentPercentages.AssignmentPercent)
+      (SELECT SUM(AssignmentPercentages.AssignmentPercent)
       FROM AssignmentPercentages
       WHERE AssignmentPercentages.AType = 'QUIZ'
       GROUP BY AssignmentPercentages.SID) AS QuizPercentages
