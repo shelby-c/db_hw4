@@ -23,7 +23,7 @@ ON HW4_RawScore.AName = HW4_Assignment.AName;
 DROP VIEW IF EXISTS CourseAverage;
 
 CREATE VIEW CourseAverage AS
-SELECT ExamPercentages.SID AS SID, QuizAvg * 0.4 + ExamAvg * 0.6 AS CourseAvg
+SELECT ExamPercentages.SID AS SID, COALESCE(QuizAvg, 0) * 0.4 + COALESCE(ExamAvg, 0) * 0.6 AS CourseAvg
 FROM (SELECT AVG(AssignmentPercentages.AssignmentPercent) AS ExamAvg, AssignmentPercentages.SID AS SID
       FROM AssignmentPercentages
       WHERE AssignmentPercentages.AType = 'EXAM'
