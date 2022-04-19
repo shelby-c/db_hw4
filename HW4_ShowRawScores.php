@@ -18,7 +18,7 @@
         // execute it, and if non-empty result, output each row of result
         if ($result = $conn->query("CALL HW4_ShowRawScores('".$SID."');")) {
             
-            //echo "hi1";
+            echo "hi1";
             //echo $result;
             //echo "hi2";
 
