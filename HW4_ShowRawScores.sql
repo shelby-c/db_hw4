@@ -32,12 +32,19 @@ BEGIN
       -- try 2
       WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.Score AS Score, HW4_RawScore.AName AS AName
                              FROM HW4_Student, HW4_RawScore
-                             WHERE HW4_Student.SID = HW4_RawScore.SID) -- all students matched with scores for assignments they attempted
-      SELECT WithSID.SID, WithSID.LName, WithSID.FName, WithSID.Sec, HW4_Assignment.AName, WithSID.Score
+                             WHERE HW4_Student.SID = HW4_RawScore.SID aND HW4_Student.SID = sid) -- all students matched with scores for assignments they attempted
+      SELECT StudentScores.SID, StudentScores.LName, StudentScores.FName, StudentScores.Sec, HW4_Assignment.AName, StudentScores.Score
+      FROM StudentScores RIGHT OUTER JOIN HW4_Assignment
+        ON StudentScores.AName = HW4_Assignment.AName
+      WHERE StudentScores.SID = sid;
+
+      /*
+        SELECT WithSID.SID, WithSID.LName, WithSID.FName, WithSID.Sec, HW4_Assignment.AName, WithSID.Score
       FROM (SELECT * 
             FROM StudentScores
             WHERE StudentScores.SID = sid) AS WithSID RIGHT OUTER JOIN HW4_Assignment
         ON WithSID.AName = HW4_Assignment.AName;
+      */
    ELSE
       SELECT CONCAT('ERROR: SID ', sid, ' not found') AS SID;
    END IF;
