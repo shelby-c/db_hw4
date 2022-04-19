@@ -14,7 +14,7 @@ HW4 ShowAllCourseAverages.php for this item.
 DROP VIEW IF EXISTS AssignmentPercentages;
 
 CREATE VIEW AssignmentPercentages AS
-SELECT HW4_RawScore.SID AS SID, HW4_Assignment.AName AS AName, (COALESCE(HW4_RawScore.Score / HW4_Assignment.PtsPoss, 0) * 100 AS AssignmentPercent, HW4_Assignment.AType AS AType
+SELECT HW4_RawScore.SID AS SID, HW4_Assignment.AName AS AName, HW4_RawScore.Score / HW4_Assignment.PtsPoss * 100 AS AssignmentPercent, HW4_Assignment.AType AS AType
 FROM HW4_RawScore RIGHT OUTER JOIN HW4_Assignment
 ON HW4_RawScore.AName = HW4_Assignment.AName;
 
@@ -24,12 +24,12 @@ DROP VIEW IF EXISTS CourseAverage;
 
 CREATE VIEW CourseAverage AS
 SELECT ExamPercentages.SID AS SID, COALESCE(QuizAvg, 0) * 0.4 + COALESCE(ExamAvg, 0) * 0.6 AS CourseAvg
-FROM (SELECT AVG(AssignmentPercentages.AssignmentPercent) AS ExamAvg, AssignmentPercentages.SID AS SID
+FROM (SELECT AVG(COALESCE(AssignmentPercentages.AssignmentPercent, 0)) AS ExamAvg, AssignmentPercentages.SID AS SID
       FROM AssignmentPercentages
       WHERE AssignmentPercentages.AType = 'EXAM'
       GROUP BY AssignmentPercentages.SID) AS ExamPercentages
       LEFT OUTER JOIN 
-      (SELECT AVG(AssignmentPercentages.AssignmentPercent) AS QuizAvg, AssignmentPercentages.SID AS SID
+      (SELECT AVG(COALESCE(AssignmentPercentages.AssignmentPercent,0)) AS QuizAvg, AssignmentPercentages.SID AS SID
       FROM AssignmentPercentages
       WHERE AssignmentPercentages.AType = 'QUIZ'
       GROUP BY AssignmentPercentages.SID) AS QuizPercentages
