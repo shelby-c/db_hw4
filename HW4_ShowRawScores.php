@@ -63,7 +63,7 @@
 	   echo "<br><br>";
 
        // call the stored procedure we already defined on dbase
-	   if ($result = $conn->query("CALL RawScoresForSingleStudent('".$item."');")) {
+	   if ($result = $conn->query("CALL HW4_ShowRawScores('".$item."');")) {
 
 	      echo "<table border=\"2px solid black\">";
 
@@ -92,7 +92,7 @@
 	      echo "</table>";
 
           } else {
-             echo "Call to ShowRawScoresForSingleStudent failed<br>";
+             echo "Call to HW4_ShowRawScores failed<br>";
 	  }   
    }
 
