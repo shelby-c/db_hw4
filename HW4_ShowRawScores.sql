@@ -57,7 +57,7 @@ BEGIN
    -- as part of a later query of table HW4_RawScore
    SELECT
      GROUP_CONCAT(DISTINCT
-       CONCAT('LName', 'FName', 'Sec',
+       CONCAT(LName, ' ', FName, ' ', Sec,
          'max(case when aname = ''',
          aname,
          ''' then score end) as ''',aname,''''
