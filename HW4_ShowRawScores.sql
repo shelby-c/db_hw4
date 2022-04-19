@@ -76,14 +76,7 @@ BEGIN
                      @sql,
                      ' FROM StudentScores WHERE sid = ',
 		     '?');
-/*
-('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.Score AS Score, HW4_RawScore.AName AS AName
-                             FROM HW4_Student, HW4_RawScore
-                             WHERE HW4_Student.SID = HW4_RawScore.SID ', 'SELECT SID, LName, FName, Sec, ',
-                     @sql,
-                     ' FROM StudentScores WHERE sid = ',
-		     '?');
-*/
+
    -- alert the server we have a statement shell to set up
    PREPARE stmt FROM @sql;
 
