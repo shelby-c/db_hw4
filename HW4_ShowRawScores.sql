@@ -32,7 +32,7 @@ BEGIN
       -- try 2
       WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.Score AS Score, HW4_RawScore.AName AS AName
                              FROM HW4_Student, HW4_RawScore
-                             WHERE HW4_Student.SID = HW4_RawScore.SID aND HW4_Student.SID = sid) -- all students matched with scores for assignments they attempted
+                             WHERE HW4_Student.SID = HW4_RawScore.SID AND HW4_Student.SID = sid) -- all students matched with scores for assignments they attempted
       SELECT StudentScores.SID, StudentScores.LName, StudentScores.FName, StudentScores.Sec, HW4_Assignment.AName, StudentScores.Score
       FROM StudentScores RIGHT OUTER JOIN HW4_Assignment
         ON StudentScores.AName = HW4_Assignment.AName
