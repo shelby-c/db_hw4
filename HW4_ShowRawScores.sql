@@ -23,10 +23,10 @@ BEGIN
 --   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"
       -- SELECT 'test' AS SID;
       SELECT HW4_Student.SID, HW4_Student.LName, HW4_Student.FName, HW4_Student.Sec, HW4_Assignment.AName, HW4_RawScore.Score
-      FROM HW4_RawScore
+      FROM HW4_Student
       FULL OUTER JOIN HW4_Assignment
-        ON HW4_RawScore.AName = HW4_Assignment.AName
-      JOIN HW4_Student
+        ON HW4_Student.AName = HW4_Assignment.AName
+      JOIN HW4_RawScore
         ON HW4_Student.SID = HW4_RawScore.SID AND HW4_RawScore.AName = HW4_Assignment.AName
       WHERE HW4_Student.SID = sid;
    ELSE
