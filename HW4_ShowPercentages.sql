@@ -97,7 +97,7 @@ DELIMITER //
                              WHERE HW4_Student.SID = Assignments.SID) ', 'SELECT sid, LName, FName, Sec, ',
                      @sql, 
                      ' FROM StudentScores WHERE sid = ',
-		     '?');*
+		     '?');*/
        
 
         -- alert the server we have a statement shell to set up
