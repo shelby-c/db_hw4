@@ -19,7 +19,7 @@ Use the filenames HW4 ShowPercentages.sql and HW4 ShowPercentages.php for this i
 DROP VIEW IF EXISTS Assignments;
 
 CREATE VIEW Assignments AS
-SELECT HW4_RawScore.SID AS SID, HW4_Assignment.AName AS AName, CAST(COALESCE(HW4_RawScore.Score, 0) / HW4_Assignment.PtsPoss * 100 AS NUMERIC (3, 2)) AS Score, HW4_Assignment.AType AS AType
+SELECT HW4_RawScore.SID AS SID, HW4_Assignment.AName AS AName, FORMAT(COALESCE(HW4_RawScore.Score, 0) / HW4_Assignment.PtsPoss * 100, 2) AS Score, HW4_Assignment.AType AS AType
 FROM HW4_RawScore RIGHT OUTER JOIN HW4_Assignment
 ON HW4_RawScore.AName = HW4_Assignment.AName;
 
