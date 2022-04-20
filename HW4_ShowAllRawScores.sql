@@ -69,7 +69,7 @@ BEGIN
         PREPARE stmt FROM @sql;
 
          -- now execute the statement shell with a value plugged in for the ?
-        EXECUTE stmt -- USING sid;
+        EXECUTE stmt; -- USING sid;
 
         -- tear down the prepared shell since no longer needed (we won't requery it)
         DEALLOCATE PREPARE stmt;
