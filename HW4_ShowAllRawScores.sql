@@ -46,9 +46,11 @@ BEGIN
         -- into a larger query string so we can execute it, but leave ?
         -- in place so we can plug in the specific sid value in a careful way
 
-        SET @sql = CONCAT('SELECT SID, LName, FName, Sec, ',
+        SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.Score AS Score, HW4_RawScore.AName AS AName
+                             FROM HW4_Student, HW4_RawScore
+                             WHERE HW4_Student.SID = HW4_RawScore.SID) ', 'SELECT SID, LName, FName, Sec, ',
                      @sql,
-                     ' FROM HW4_Student, HW4_RawScore WHERE HW4_Student.SID = HW4_RawScore.SID');
+                     ' FROM StudentScores');
 
 -- , 'ORDER BY StudentScores.Sec ASC, StudentScores.LName ASC, StudentScores.FName ASC'
 
