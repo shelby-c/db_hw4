@@ -48,10 +48,9 @@ BEGIN
 
         SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.Score AS Score, HW4_RawScore.AName AS AName
                              FROM HW4_Student, HW4_RawScore
-                             WHERE HW4_Student.SID = HW4_RawScore.SID) ', 'SELECT sid, LName, FName, Sec, ',
+                             WHERE HW4_Student.SID = HW4_RawScore.SID) ', 'SELECT SID, LName, FName, Sec, ',
                      @sql,
-                     ' FROM HW4_Student, HW4_RawScore
-                             WHERE HW4_Student.SID = HW4_RawScore.SID');
+                     ' FROM HW4_Student, HW4_RawScore WHERE HW4_Student.SID = HW4_RawScore.SID');
 
 -- , 'ORDER BY StudentScores.Sec ASC, StudentScores.LName ASC, StudentScores.FName ASC'
 
