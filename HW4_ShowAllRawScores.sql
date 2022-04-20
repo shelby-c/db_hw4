@@ -50,7 +50,8 @@ BEGIN
                              FROM HW4_Student, HW4_RawScore
                              WHERE HW4_Student.SID = HW4_RawScore.SID) ', 'SELECT sid, LName, FName, Sec, ',
                      @sql,
-                     ' FROM StudentScores');
+                     ' FROM HW4_Student, HW4_RawScore
+                             WHERE HW4_Student.SID = HW4_RawScore.SID');
 
 -- , 'ORDER BY StudentScores.Sec ASC, StudentScores.LName ASC, StudentScores.FName ASC'
 
