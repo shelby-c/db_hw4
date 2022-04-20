@@ -52,6 +52,9 @@ BEGIN
                              WHERE HW4_Student.SID = HW4_RawScore.SID) ', 'SELECT SID, LName, FName, Sec, ',
                      @sql,
                      ' FROM StudentScores');
+                     -- use dbase, see what prints, start at 29, see if one row or multiple (SELECT CONCAT(''', @sql, '''');
+                     -- if one, sql issue
+                     -- if many, php issue
 
 -- , 'ORDER BY StudentScores.Sec ASC, StudentScores.LName ASC, StudentScores.FName ASC'
 
