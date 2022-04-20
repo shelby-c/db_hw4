@@ -70,8 +70,8 @@ BEGIN
 
         DECLARE done INT DEFAULT 0;
         DECLARE current_sid INT;
-        DECLARE sidcur CURSOR FOR (SELECT SID
-                                    FROM HW4_Student);
+        DECLARE sidcur CURSOR FOR SELECT SID
+                                    FROM HW4_Student;
         DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
 
         OPEN sidcur;
