@@ -60,7 +60,7 @@ DELIMITER //
                              FROM HW4_Student, Assignments
                              WHERE HW4_Student.SID = Assignments.SID) ', 'SELECT sid, LName, FName, Sec, ',
                      @sql, ' CourseAvg,',
-                     ' FROM StudentScores, CourseAverage ON HW4_Student.SID = CourseAverage.SID WHERE sid = ',
+                     ' FROM StudentScores, CourseAverage ON StudentScores.SID = CourseAverage.SID WHERE sid = ',
 		     '?');
 
         
