@@ -72,7 +72,7 @@ BEGIN
         DECLARE current dnum INT;
         DECLARE dnumcur CURSOR FOR (SELECT SID
                                     FROM HW4_Student);
-        DECLARE CONTINUE handler for not found set done = 1;
+        DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
 
         OPEN dnumcur;
 
@@ -87,7 +87,7 @@ BEGIN
 
              -- tear down the prepared shell since no longer needed (we won't requery it)
             DEALLOCATE PREPARE stmt;
-        UNTIL done
+        UNTIL done = 1
         END REPEAT;
 
         CLOSE dnumcur;
