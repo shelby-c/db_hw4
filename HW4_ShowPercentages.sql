@@ -56,9 +56,9 @@ DELIMITER //
         -- in place so we can plug in the specific sid value in a careful way
    
         -- why doesn't this work? should be same as one below which works for ShowRawScores but with AssignmentPercentages instead of HW4_RawScore
-        SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.Score AS Score, HW4_RawScore.AName AS AName
-                             FROM HW4_Student, HW4_RawScore
-                             WHERE HW4_Student.SID = HW4_RawScore.SID) ', 'SELECT sid, LName, FName, Sec, ',
+        SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.AssignmentPercentages AS Score, AssignmentPercentages.AName AS AName
+                             FROM HW4_Student, AssignmentPercentages
+                             WHERE HW4_Student.SID = AssignmentPercentages.SID) ', 'SELECT sid, LName, FName, Sec, ',
                      @sql,
                      ' FROM StudentScores WHERE sid = ',
 		     '?');
