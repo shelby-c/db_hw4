@@ -19,7 +19,7 @@ Use the filenames HW4 ShowPercentages.sql and HW4 ShowPercentages.php for this i
 DROP VIEW IF EXISTS AssignmentPercentages;
 
 CREATE VIEW AssignmentPercentages AS
-SELECT HW4_RawScore.SID AS SID, HW4_Assignment.AName AS AName, COALESCE(HW4_RawScore.Score, 0) / HW4_Assignment.PtsPoss * 100 AS AssignmentPercent, HW4_Assignment.AType AS AType
+SELECT HW4_RawScore.SID AS SID, HW4_Assignment.AName AS AName, COALESCE(HW4_RawScore.Score, 0) / HW4_Assignment.PtsPoss * 100 AS Score, HW4_Assignment.AType AS AType
 FROM HW4_RawScore RIGHT OUTER JOIN HW4_Assignment
 ON HW4_RawScore.AName = HW4_Assignment.AName;
 
@@ -121,7 +121,8 @@ END; //
         -- into a larger query string so we can execute it, but leave ?
         -- in place so we can plug in the specific sid value in a careful way
    
-        SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, AssignmentPercentages.AssignmentPercent AS Score, AssignmentPercentages.AName AS AName
+        -- why doesn't this work? should be same as one below which works fir ShowRawScores but with AssignmentPercentages instead of HW4_RawScore
+        SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, AssignmentPercentages.Score AS Score, AssignmentPercentages.AName AS AName
                              FROM HW4_Student, AssignmentPercentages
                              WHERE HW4_Student.SID = AssignmentPercentages.SID) ', 'SELECT sid, LName, FName, Sec, ',
                      @sql,
