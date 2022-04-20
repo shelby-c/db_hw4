@@ -69,28 +69,28 @@ BEGIN
         */
 
         DECLARE done INT DEFAULT 0;
-        DECLARE current dnum INT;
-        DECLARE dnumcur CURSOR FOR (SELECT SID
+        DECLARE current_sid INT;
+        DECLARE sidcur CURSOR FOR (SELECT SID
                                     FROM HW4_Student);
         DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
 
-        OPEN dnumcur;
+        OPEN sidcur;
 
         REPEAT
-            FETCH dnumcur INTO current_dnum;
+            FETCH sidcur INTO current_sid;
 
             -- alert the server we have a statement shell to set up
             PREPARE stmt FROM @sql;
 
              -- now execute the statement shell with a value plugged in for the ?
-            EXECUTE stmt USING current_dnum;
+            EXECUTE stmt USING current_sid;
 
              -- tear down the prepared shell since no longer needed (we won't requery it)
             DEALLOCATE PREPARE stmt;
         UNTIL done = 1
         END REPEAT;
 
-        CLOSE dnumcur;
+        CLOSE sidcur;
     ELSE
       SELECT 'ERROR: Invalid password' AS SID;
     END IF;
