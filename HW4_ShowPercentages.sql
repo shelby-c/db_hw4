@@ -115,7 +115,7 @@ END; //
         -- into a larger query string so we can execute it, but leave ?
         -- in place so we can plug in the specific sid value in a careful way
    
-        SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, AssignmentPercentages.AssignmentPercent AS AssignmentPercent, AssignmentPercentages.AName AS AName
+        SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, AssignmentPercentages.AssignmentPercent AS Score, AssignmentPercentages.AName AS AName
                              FROM HW4_Student, AssignmentPercentages
                              WHERE HW4_Student.SID = AssignmentPercentages.SID) ', 'SELECT sid, LName, FName, Sec, ',
                      @sql,
