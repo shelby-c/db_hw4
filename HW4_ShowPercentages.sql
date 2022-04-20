@@ -96,8 +96,7 @@ DELIMITER //
                              FROM HW4_Student, Assignments
                              WHERE HW4_Student.SID = Assignments.SID) ', 'SELECT sid, LName, FName, Sec, ',
                      @sql, 
-                     ' FROM StudentScores JOIN CourseAverages 
-                       ON StudentScores.SID = CourseAverages.SID WHERE sid = ',
+                     ' FROM StudentScores WHERE sid = ',
 		     '?');
        
 
