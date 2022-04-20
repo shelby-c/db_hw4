@@ -47,6 +47,7 @@
 
     
     $conn->close();*/
+    
     //open a connection to dbase server 
 	include 'open.php';
 
