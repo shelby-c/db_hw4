@@ -74,7 +74,7 @@ BEGIN
         -- tear down the prepared shell since no longer needed (we won't requery it)
         DEALLOCATE PREPARE stmt;
     ELSE
-      SELECT CONCAT('ERROR: SID ', sid, ' not found') AS SID;
+      SELECT 'ERROR: Invalid password' AS SID;
     END IF;
 END; //
 
