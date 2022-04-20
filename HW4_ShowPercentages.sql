@@ -98,6 +98,8 @@ DELIMITER //
                      @sql, 
                      ' FROM StudentScores WHERE sid = ',
 		     '?');
+
+
        
 
         -- alert the server we have a statement shell to set up
