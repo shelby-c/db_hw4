@@ -83,6 +83,7 @@
     	      $flist = $result->fetch_fields(); 
 	          echo "<tr>";
 	          foreach($flist as $fname){
+                    
                       echo "<td>".$row[$fname->name]."</td>";
               }
   	          echo "</tr>";

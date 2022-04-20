@@ -16,6 +16,12 @@ display any table, but should instead display a descriptive message of the form 
 where XXXX is replaced by the given SID. 
 Use the filenames HW4 ShowPercentages.sql and HW4 ShowPercentages.php for this item.
 */
+DROP VIEW IF EXISTS AssignmentPercentages;
+
+CREATE VIEW AssignmentPercentages AS
+SELECT HW4_RawScore.SID AS SID, HW4_Assignment.AName AS AName, COALESCE(HW4_RawScore.Score, 0) / HW4_Assignment.PtsPoss * 100 AS AssignmentPercent, HW4_Assignment.AType AS AType
+FROM HW4_RawScore RIGHT OUTER JOIN HW4_Assignment
+ON HW4_RawScore.AName = HW4_Assignment.AName;
 
 DELIMITER //
 
@@ -115,20 +121,20 @@ END; //
         -- into a larger query string so we can execute it, but leave ?
         -- in place so we can plug in the specific sid value in a careful way
    
-        /*SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, AssignmentPercentages.AssignmentPercent AS Score, AssignmentPercentages.AName AS AName
+        SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, AssignmentPercentages.AssignmentPercent AS Score, AssignmentPercentages.AName AS AName
                              FROM HW4_Student, AssignmentPercentages
                              WHERE HW4_Student.SID = AssignmentPercentages.SID) ', 'SELECT sid, LName, FName, Sec, ',
                      @sql,
                      ' FROM StudentScores WHERE sid = ',
-		     '?');*/
+		     '?');
 
         
-        SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.Score AS Score, HW4_RawScore.AName AS AName
+        /*SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.Score AS Score, HW4_RawScore.AName AS AName
                              FROM HW4_Student, HW4_RawScore
                              WHERE HW4_Student.SID = HW4_RawScore.SID) ', 'SELECT sid, LName, FName, Sec, ',
                      @sql,
                      ' FROM StudentScores WHERE sid = ',
-		     '?');
+		     '?');*/
         
 
         -- alert the server we have a statement shell to set up
