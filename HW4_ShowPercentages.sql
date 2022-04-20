@@ -23,6 +23,35 @@ SELECT HW4_RawScore.SID AS SID, HW4_Assignment.AName AS AName, FORMAT(COALESCE(H
 FROM HW4_RawScore RIGHT OUTER JOIN HW4_Assignment
 ON HW4_RawScore.AName = HW4_Assignment.AName;
 
+-- Course avg to be calculated as (points earned) / (total points possible)
+-- NEED TO ACCOUNT FOR UNATTEMPTED ASSIGNMENTS
+DROP VIEW IF EXISTS CourseAverages; -- course avg for 1006 should be 78.3999
+
+CREATE VIEW CourseAverages AS
+SELECT ExamPercentages.SID AS SID, COALESCE(QuizAvg, 0) * 0.4 + COALESCE(ExamAvg, 0) * 0.6 AS CourseAvg
+FROM (SELECT AVG(IFNULL(Assignments.Score, 0)) AS ExamAvg, Assignments.SID AS SID
+      FROM Assignments
+      WHERE Assignments.AType = 'EXAM'
+      GROUP BY Assignments.SID) AS ExamPercentages
+      LEFT OUTER JOIN 
+      (SELECT AVG(IFNULL(Assignments.Score, 0)) AS QuizAvg, Assignments.SID AS SID
+      FROM Assignments
+      WHERE Assignments.AType = 'QUIZ'
+      GROUP BY Assignments.SID) AS QuizPercentages
+ON ExamPercentages.SID = QuizPercentages.SID
+UNION
+SELECT ExamPercentages.SID AS SID, COALESCE(QuizAvg, 0) * 0.4 + COALESCE(ExamAvg, 0) * 0.6 AS CourseAvg
+FROM (SELECT AVG(IFNULL(Assignments.Score, 0)) AS ExamAvg, Assignments.SID AS SID
+      FROM Assignments
+      WHERE Assignments.AType = 'EXAM'
+      GROUP BY Assignments.SID) AS ExamPercentages
+      RIGHT OUTER JOIN 
+      (SELECT AVG(IFNULL(Assignments.Score, 0)) AS QuizAvg, Assignments.SID AS SID
+      FROM Assignments
+      WHERE Assignments.AType = 'QUIZ'
+      GROUP BY Assignments.SID) AS QuizPercentages
+ON ExamPercentages.SID = QuizPercentages.SID;
+
 DELIMITER //
 
 -- Get grades as a percentage for each assignment
@@ -60,7 +89,7 @@ DELIMITER //
                              FROM HW4_Student, Assignments
                              WHERE HW4_Student.SID = Assignments.SID) ', 'SELECT sid, LName, FName, Sec, ',
                      @sql, ' CourseAvg,',
-                     ' FROM StudentScores JOIN CourseAverage ON StudentScores.SID = CourseAverage.SID WHERE sid = ',
+                     ' FROM StudentScores JOIN CourseAverages ON StudentScores.SID = CourseAverages.SID WHERE sid = ',
 		     '?');
 
         
