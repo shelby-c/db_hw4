@@ -59,10 +59,6 @@ BEGIN
 END; //
 */
 
-DROP PROCEDURE IF EXISTS HW4_ShowRawScores //
-
-CREATE PROCEDURE HW4_ShowRawScores(IN sid VARCHAR(4))
-BEGIN
    -- IF EXISTS(SELECT * FROM HW4_Student WHERE HW4_Student.SID = sid) THEN
 --   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"
       /*WITH EveryAssignment AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_Assignment.AName AS AName
