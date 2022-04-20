@@ -52,13 +52,13 @@
 	echo "<h2>HW4 Show All Raw Scores</h2><br>";
 	echo "Password: ";
 
-    // proceed with query only if supplied SID is non-empty
+    // proceed with query only if supplied password is non-empty
 	if (!empty($item)) {
 	   echo $item;
 	   echo "<br><br>";
 
        // call the stored procedure we already defined on dbase
-	   if ($result = $conn->query("CALL HW4_AllRawScores('".$item."');")) {
+	   if ($result = $conn->query("CALL HW4_ShowAllRawScores('".$item."');")) {
 
 	      echo "<table border=\"2px solid black\">";
 
@@ -87,7 +87,7 @@
 	      echo "</table>";
 
           } else {
-             echo "Call to AllRawScores failed<br>";
+             echo "Call to ShowAllRawScores failed<br>";
 	  }   
    }
 
