@@ -85,21 +85,20 @@ DELIMITER //
         -- in place so we can plug in the specific sid value in a careful way
    
         -- why doesn't this work? should be same as one below which works for ShowRawScores but with AssignmentPercentages instead of HW4_RawScore
-        SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, Assignments.Score AS Score, Assignments.AName AS AName
+        /*SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, Assignments.Score AS Score, Assignments.AName AS AName
                              FROM HW4_Student, Assignments
                              WHERE HW4_Student.SID = Assignments.SID) ', 'SELECT sid, LName, FName, Sec, ',
                      @sql,
                      ' FROM StudentScores WHERE sid = ',
-		     '?');
-
-        
-        /*SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.Score AS Score, HW4_RawScore.AName AS AName
-                             FROM HW4_Student, HW4_RawScore
-                             WHERE HW4_Student.SID = HW4_RawScore.SID) ', 'SELECT sid, LName, FName, Sec, ',
-                     @sql,
-                     ' FROM StudentScores WHERE sid = ',
 		     '?');*/
-        
+
+        SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, Assignments.Score AS Score, Assignments.AName AS AName
+                             FROM HW4_Student, Assignments
+                             WHERE HW4_Student.SID = Assignments.SID) ', 'SELECT sid, LName, FName, Sec, ',
+                     @sql, ', CourseAvg ',
+                     ' FROM StudentScores JOIN CourseAverage ON StudentScores.SID = CourseAverage.SID WHERE sid = ',
+		     '?');
+       
 
         -- alert the server we have a statement shell to set up
         PREPARE stmt FROM @sql;
