@@ -50,7 +50,9 @@ BEGIN
                              FROM HW4_Student, HW4_RawScore
                              WHERE HW4_Student.SID = HW4_RawScore.SID) ', 'SELECT sid, LName, FName, Sec, ',
                      @sql,
-                     ' FROM StudentScores ', 'ORDER BY StudentScores.Sec ASC, StudentScores.LName ASC, StudentScores.FName ASC');
+                     ' FROM StudentScores');
+
+-- , 'ORDER BY StudentScores.Sec ASC, StudentScores.LName ASC, StudentScores.FName ASC'
 
         -- alert the server we have a statement shell to set up
         PREPARE stmt FROM @sql;
