@@ -13,7 +13,6 @@
         exit();
     }  else {
         // REMOVE LATER
-        echo "Connection successful!! <br/>"; 
     }
 
 
