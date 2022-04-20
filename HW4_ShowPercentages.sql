@@ -16,9 +16,9 @@ display any table, but should instead display a descriptive message of the form 
 where XXXX is replaced by the given SID. 
 Use the filenames HW4 ShowPercentages.sql and HW4 ShowPercentages.php for this item.
 */
-DROP VIEW IF EXISTS AssignmentPercentages;
+DROP VIEW IF EXISTS Assignments;
 
-CREATE VIEW AssignmentPercentages AS
+CREATE VIEW Assignments AS
 SELECT HW4_RawScore.SID AS SID, HW4_Assignment.AName AS AName, COALESCE(HW4_RawScore.Score, 0) / HW4_Assignment.PtsPoss * 100 AS Score, HW4_Assignment.AType AS AType
 FROM HW4_RawScore RIGHT OUTER JOIN HW4_Assignment
 ON HW4_RawScore.AName = HW4_Assignment.AName;
@@ -56,9 +56,9 @@ DELIMITER //
         -- in place so we can plug in the specific sid value in a careful way
    
         -- why doesn't this work? should be same as one below which works for ShowRawScores but with AssignmentPercentages instead of HW4_RawScore
-        SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.AssignmentPercentages AS Score, AssignmentPercentages.AName AS AName
-                             FROM HW4_Student, AssignmentPercentages
-                             WHERE HW4_Student.SID = AssignmentPercentages.SID) ', 'SELECT sid, LName, FName, Sec, ',
+        SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, Assignments.Score AS Score, Assignments.AName AS AName
+                             FROM HW4_Student, Assignments
+                             WHERE HW4_Student.SID = Assignments.SID) ', 'SELECT sid, LName, FName, Sec, ',
                      @sql,
                      ' FROM StudentScores WHERE sid = ',
 		     '?');
