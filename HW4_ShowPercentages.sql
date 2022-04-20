@@ -88,7 +88,7 @@ DELIMITER //
         SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, Assignments.Score AS Score, Assignments.AName AS AName
                              FROM HW4_Student, Assignments
                              WHERE HW4_Student.SID = Assignments.SID) ', 'SELECT sid, LName, FName, Sec, ',
-                     @sql, ', CourseAvg,',
+                     @sql, ', CourseAvg',
                      ' FROM StudentScores JOIN CourseAverages ON StudentScores.SID = CourseAverages.SID WHERE sid = ',
 		     '?');
 
