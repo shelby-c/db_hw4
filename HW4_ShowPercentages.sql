@@ -27,73 +27,7 @@ DELIMITER //
 
 -- Get grades as a percentage for each assignment
 -- NEED TO ACCOUNT FOR UNATTEMPTED ASSIGNMENTS
-/*DROP VIEW IF EXISTS AssignmentPercentages;
 
-CREATE VIEW AssignmentPercentages AS
-SELECT HW4_RawScore.SID AS SID, HW4_Assignment.AName AS AName, (HW4_RawScore.Score / HW4_Assignment.PtsPoss) AS AssignmentPercent, HW4_Assignment.AType AS AType
-FROM HW4_RawScore, HW4_Assignment
-WHERE HW4_RawScore.AName = HW4_Assignment.AName;
-
--- Course avg to be calculated as (points earned) / (total points possible)
--- NEED TO ACCOUNT FOR UNATTEMPTED ASSIGNMENTS
-DROP VIEW IF EXISTS CourseAverage;
-
-CREATE VIEW CourseAverage AS
-SELECT AssignmentPercentages.SID AS SID, (SUM(SELECT AssignmentPercentages.AssignmentPercent
-                                              FROM AssignmentPercentages
-                                              WHERE AssignmentPercentages.AType = 'QUIZ') * 0.4 + 
-                                            SUM (SELECT AssignmentPercentages.AssignmentPercent
-                                                 FROM AssignmentPercentages
-                                                 WHERE AssignmentPercentages.AType = 'EXAM') * 0.6)  AS CourseAvg
-FROM AssignmentPercentages
-GROUP BY AssignmentPercentages.SID;
-
-
-DROP PROCEDURE IF EXISTS HW4_ShowPercentages //
-
-CREATE PROCEDURE HW4_ShowPercentages(IN sid VARCHAR(10))
-BEGIN
-    IF EXISTS(SELECT * FROM HW4_Student WHERE SID = sid) THEN
---   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"
-      SELECT HW4_Student.SID, HW4_Student.LName, HW4_Student.FName, HW4_Student.Sec, HW4_RawScore.AName, HW4_RawScore.Score
-      FROM HW4_Student JOIN AssignmentPercentages
-      ON HW4_Student.SID = AssignmentPercentages.SID
-      WHERE HW4_Student.SID = sid;
-   ELSE
-       SELECT CONCAT('ERROR: SID ', sid, ' not found') AS SID;
-   END IF;
-END; //
-*/
-
-   -- IF EXISTS(SELECT * FROM HW4_Student WHERE HW4_Student.SID = sid) THEN
---   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"
-      /*WITH EveryAssignment AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_Assignment.AName AS AName
-                                FROM HW4_Student CROSS JOIN HW4_Assignment) -- all students matched with all assignments
-      SELECT EveryAssignment.SID, EveryAssignment.LName, EveryAssignment.FName, EveryAssignment.Sec, EveryAssignment.AName, HW4_RawScore.Score
-      FROM EveryAssignment LEFT OUTER JOIN HW4_RawScore
-        ON HW4_RawScore.AName = EveryAssignment.AName AND EveryAssignment.SID = HW4_RawScore.SID
-      WHERE HW4_RawScore.SID = sid;*/
-
-
-      -- try 2
-     /* WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.Score AS Score, HW4_RawScore.AName AS AName
-                             FROM HW4_Student, HW4_RawScore
-                             WHERE HW4_Student.SID = HW4_RawScore.SID AND HW4_Student.SID = sid) -- all students matched with scores for assignments they attempted
-      SELECT StudentScores.SID, StudentScores.LName, StudentScores.FName, StudentScores.Sec, HW4_Assignment.AName, StudentScores.Score
-      FROM StudentScores RIGHT OUTER JOIN HW4_Assignment
-        ON StudentScores.AName = HW4_Assignment.AName;*/
-      -- WHERE StudentScores.SID = sid;
-
-      /*
-        SELECT WithSID.SID, WithSID.LName, WithSID.FName, WithSID.Sec, HW4_Assignment.AName, WithSID.Score
-      FROM (SELECT * 
-            FROM StudentScores
-            WHERE StudentScores.SID = sid) AS WithSID RIGHT OUTER JOIN HW4_Assignment
-        ON WithSID.AName = HW4_Assignment.AName;
-      */
-   /*ELSE
-      SELECT CONCAT('ERROR: SID ', sid, ' not found') AS SID;
-   END IF;*/
     DROP PROCEDURE IF EXISTS HW4_ShowPercentages //
 
     CREATE PROCEDURE HW4_ShowPercentages(IN sid VARCHAR(4))
@@ -122,20 +56,20 @@ END; //
         -- in place so we can plug in the specific sid value in a careful way
    
         -- why doesn't this work? should be same as one below which works fir ShowRawScores but with AssignmentPercentages instead of HW4_RawScore
-        SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, AssignmentPercentages.Score AS Score, AssignmentPercentages.AName AS AName
+        /*SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, AssignmentPercentages.Score AS Score, AssignmentPercentages.AName AS AName
                              FROM HW4_Student, AssignmentPercentages
                              WHERE HW4_Student.SID = AssignmentPercentages.SID) ', 'SELECT sid, LName, FName, Sec, ',
                      @sql,
                      ' FROM StudentScores WHERE sid = ',
-		     '?');
+		     '?');*/
 
         
-        /*SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.Score AS Score, HW4_RawScore.AName AS AName
+        SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.Score AS Score, HW4_RawScore.AName AS AName
                              FROM HW4_Student, HW4_RawScore
                              WHERE HW4_Student.SID = HW4_RawScore.SID) ', 'SELECT sid, LName, FName, Sec, ',
                      @sql,
                      ' FROM StudentScores WHERE sid = ',
-		     '?');*/
+		     '?');
         
 
         -- alert the server we have a statement shell to set up
