@@ -1,4 +1,6 @@
 -- HW4_ShowRawScores.sql
+
+-- Shelby Coe (scoe4)
 /*
 Given a single SID identifier, display that single student’s information and raw scores 
 on all assignments in the course. If the specified student has not attempted a quiz or test, 

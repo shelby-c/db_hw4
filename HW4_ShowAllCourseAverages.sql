@@ -1,4 +1,6 @@
 -- HW4_AllCourseAverages.sql
+
+-- Shelby Coe (scoe4)
 /*
 If given any valid password present in the HW4 passwords table, display a full table of summary data 
 for all students in the course (excluding the total points tuple) sorted first by section in ascending order, 
