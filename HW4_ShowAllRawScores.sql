@@ -75,19 +75,22 @@ BEGIN
 
         OPEN sidcur;
 
+        -- alert the server we have a statement shell to set up
+        PREPARE stmt FROM @sql;
+
+
         REPEAT
             FETCH sidcur INTO current_sid;
-
-            -- alert the server we have a statement shell to set up
-            PREPARE stmt FROM @sql;
 
              -- now execute the statement shell with a value plugged in for the ?
             EXECUTE stmt USING current_sid;
 
-             -- tear down the prepared shell since no longer needed (we won't requery it)
-            DEALLOCATE PREPARE stmt;
+             
         UNTIL done
         END REPEAT;
+
+        -- tear down the prepared shell since no longer needed (we won't requery it)
+        DEALLOCATE PREPARE stmt;
 
         CLOSE sidcur;
     ELSE
