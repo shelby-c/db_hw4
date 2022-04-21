@@ -62,6 +62,6 @@ BEGIN
    ELSE
        SELECT 'ERROR: Invalid password' AS SID;
    END IF;
-END //
+END; //
 
 DELIMITER ;
