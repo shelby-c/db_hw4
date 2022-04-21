@@ -20,7 +20,7 @@ BEGIN
       FROM HW4_Student JOIN HW4_RawScore
       ON HW4_Student.SID = HW4_RawScore.SID
       ORDER BY HW4_Student.Sec ASC, HW4_Student.LName ASC, HW4_Student.FName ASC;
-      
+
       /*
        --  MODIFIED CODE FROM 4/19 CLASS
         SET @sql = NULL;
@@ -80,7 +80,7 @@ BEGIN
         CLOSE sidcur;
       */
    ELSE
-      SELECT '(all raw scores) ERROR: Invalid password' AS SID;  -- DELETE () BEFORE SUBMITTING
+      SELECT 'ERROR: Invalid password' AS SID;  -- DELETE () BEFORE SUBMITTING
    END IF;
 END; //
 
