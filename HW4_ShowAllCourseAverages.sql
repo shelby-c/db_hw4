@@ -23,7 +23,7 @@ ON HW4_RawScore.AName = HW4_Assignment.AName;
 DROP VIEW IF EXISTS CourseAverage; -- course avg for 1006 should be 78.3999
 
 CREATE VIEW CourseAverage AS
-SELECT ExamPercentages.SID AS SID, FORMAT(COALESCE(QuizAvg, 0) * 0.4 + COALESCE(ExamAvg, 0) * 0.6, 2) AS CourseAvg
+SELECT ExamPercentages.SID AS SID, COALESCE(QuizAvg, 0) * 0.4 + COALESCE(ExamAvg, 0) * 0.6 AS CourseAvg
 FROM (SELECT AVG(IFNULL(AssignmentPercentages.AssignmentPercent, 0)) AS ExamAvg, AssignmentPercentages.SID AS SID
       FROM AssignmentPercentages
       WHERE AssignmentPercentages.AType = 'EXAM'
@@ -55,7 +55,7 @@ CREATE PROCEDURE HW4_AllCourseAverages(IN Password VARCHAR(10))
 BEGIN
     IF EXISTS(SELECT * FROM HW4_Password WHERE HW4_Password.CurPasswords = Password) THEN
 --   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"
-      SELECT HW4_Student.SID, HW4_Student.LName, HW4_Student.FName, HW4_Student.Sec, FORMAT(CourseAverage.CourseAvg, 2) AS CourseAvg
+      SELECT HW4_Student.SID, HW4_Student.LName, HW4_Student.FName, HW4_Student.Sec, CourseAverage.CourseAvg
       FROM HW4_Student JOIN CourseAverage
       ON HW4_Student.SID = CourseAverage.SID
       ORDER BY HW4_Student.Sec ASC, CourseAverage.CourseAvg DESC, HW4_Student.LName ASC, HW4_Student.FName ASC;
