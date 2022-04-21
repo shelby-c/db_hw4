@@ -68,10 +68,10 @@ BEGIN
         DEALLOCATE PREPARE stmt;
         */
 
-        DECLARE done INT DEFAULT 0;
+        DECLARE done INT DEFAULT FALSE;
         DECLARE current_sid INT;
         DECLARE sidcur CURSOR FOR SELECT HW4_Student.SID FROM HW4_Student;
-        DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+        DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
         OPEN sidcur;
 
@@ -86,7 +86,7 @@ BEGIN
 
              -- tear down the prepared shell since no longer needed (we won't requery it)
             DEALLOCATE PREPARE stmt;
-        UNTIL done = 1
+        UNTIL done
         END REPEAT;
 
         CLOSE sidcur;
