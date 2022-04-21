@@ -1,7 +1,7 @@
  <head><title>HW4 Show All Raw Scores</title></head>
  <body>
 <?php 
-    /*echo "<h2>HW4 Show All Raw Scores</h2>";
+    echo "<h2>HW4 Show All Raw Scores</h2>";
     echo "<br>";
 
     // open a connection to dbase server
@@ -40,8 +40,9 @@
     echo ".<br>";
 
     
-    $conn->close();*/
+    $conn->close();
 
+    /*
     //open a connection to dbase server 
 	include 'open.php';
 
@@ -92,7 +93,7 @@
    }
 
    // close the connection opened by open.php
-   $conn->close();
+   $conn->close();*/
 
 ?>
 </body>

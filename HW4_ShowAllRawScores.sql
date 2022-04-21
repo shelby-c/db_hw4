@@ -25,8 +25,12 @@ BEGIN
    END IF;*/
 
     IF EXISTS(SELECT * FROM HW4_Password WHERE HW4_Password.CurPasswords = Password) THEN
+        SELECT HW4_Student.SID, HW4_Student.LName, HW4_Student.FName, HW4_Student.Sec, HW4_RawScore.AName, HW4_RawScore.Score
+        FROM HW4_Student JOIN HW4_RawScore
+        ON HW4_Student.SID = HW4_RawScore.SID
+        ORDER BY HW4_Student.Sec ASC, HW4_Student.LName ASC, HW4_Student.FName ASC;
         --  MODIFIED CODE FROM 4/19 CLASS
-        SET @sql = NULL;
+        /*SET @sql = NULL;
 
         -- accumulate into the variable named @sql a list of assignment names
         -- and expressions to that will get the associated scores, for use 
@@ -58,16 +62,11 @@ BEGIN
                      -- if many, php issue
 
 -- , 'ORDER BY StudentScores.Sec ASC, StudentScores.LName ASC, StudentScores.FName ASC'
-/*
-        -- alert the server we have a statement shell to set up
-        PREPARE stmt FROM @sql;
 
-         -- now execute the statement shell with a value plugged in for the ?
-        EXECUTE stmt; -- USING sid;
-
+        
         -- tear down the prepared shell since no longer needed (we won't requery it)
         DEALLOCATE PREPARE stmt;
-        */
+        
 
         DECLARE done INT DEFAULT FALSE;
         DECLARE current_sid INT;
@@ -93,7 +92,7 @@ BEGIN
         -- tear down the prepared shell since no longer needed (we won't requery it)
         DEALLOCATE PREPARE stmt;
 
-        CLOSE sidcur;
+        CLOSE sidcur;*/
     ELSE
       SELECT 'ERROR: Invalid password' AS SID;
     END IF;
