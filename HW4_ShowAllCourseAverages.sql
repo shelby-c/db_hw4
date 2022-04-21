@@ -14,7 +14,7 @@ HW4 ShowAllCourseAverages.php for this item.
 DROP VIEW IF EXISTS AssignmentPercentages;
 
 CREATE VIEW AssignmentPercentages AS
-SELECT HW4_RawScore.SID AS SID, HW4_Assignment.AName AS AName, FORMAT(COALESCE(HW4_RawScore.Score, 0) / HW4_Assignment.PtsPoss * 100, 2) AS AssignmentPercent, HW4_Assignment.AType AS AType
+SELECT HW4_RawScore.SID AS SID, HW4_Assignment.AName AS AName, COALESCE(HW4_RawScore.Score, 0) / HW4_Assignment.PtsPoss * 100 AS AssignmentPercent, HW4_Assignment.AType AS AType
 FROM HW4_RawScore RIGHT OUTER JOIN HW4_Assignment
 ON HW4_RawScore.AName = HW4_Assignment.AName;
 
@@ -55,7 +55,7 @@ CREATE PROCEDURE HW4_AllCourseAverages(IN Password VARCHAR(10))
 BEGIN
     IF EXISTS(SELECT * FROM HW4_Password WHERE HW4_Password.CurPasswords = Password) THEN
 --   IF CalcBidCount(item) > 0 THEN -- need it to read like "if exists"
-      SELECT HW4_Student.SID, HW4_Student.LName, HW4_Student.FName, HW4_Student.Sec, CourseAverage.CourseAvg
+      SELECT HW4_Student.SID, HW4_Student.LName, HW4_Student.FName, HW4_Student.Sec, FORMAT(CourseAverage.CourseAvg, 2)
       FROM HW4_Student JOIN CourseAverage
       ON HW4_Student.SID = CourseAverage.SID
       ORDER BY HW4_Student.Sec ASC, CourseAverage.CourseAvg DESC, HW4_Student.LName ASC, HW4_Student.FName ASC;
