@@ -51,7 +51,6 @@ FROM (SELECT AVG(IFNULL(Assignments.Score, 0)) AS ExamAvg, Assignments.SID AS SI
 ON ExamPercentages.SID = QuizPercentages.SID;
 DELIMITER //
 -- Get grades as a percentage for each assignment
--- NEED TO ACCOUNT FOR UNATTEMPTED ASSIGNMENTS
     DROP PROCEDURE IF EXISTS HW4_ShowPercentages //
     CREATE PROCEDURE HW4_ShowPercentages(IN sid VARCHAR(4))
     BEGIN
