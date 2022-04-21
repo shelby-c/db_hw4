@@ -57,7 +57,7 @@ BEGIN
                      -- if many, php issue
 
 -- , 'ORDER BY StudentScores.Sec ASC, StudentScores.LName ASC, StudentScores.FName ASC'
-
+/*
         -- alert the server we have a statement shell to set up
         PREPARE stmt FROM @sql;
 
@@ -66,6 +66,30 @@ BEGIN
 
         -- tear down the prepared shell since no longer needed (we won't requery it)
         DEALLOCATE PREPARE stmt;
+        */
+
+        DECLARE done INT DEFAULT FALSE;
+        DECLARE current_sid INT;
+        DECLARE sidcur CURSOR FOR SELECT HW4_Student.SID FROM HW4_Student;
+        DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+        OPEN sidcur;
+
+        REPEAT
+            FETCH sidcur INTO current_sid;
+
+            -- alert the server we have a statement shell to set up
+            PREPARE stmt FROM @sql;
+
+             -- now execute the statement shell with a value plugged in for the ?
+            EXECUTE stmt USING current_sid;
+
+             -- tear down the prepared shell since no longer needed (we won't requery it)
+            DEALLOCATE PREPARE stmt;
+        UNTIL done
+        END REPEAT;
+
+        CLOSE sidcur;
     ELSE
       SELECT 'ERROR: Invalid password' AS SID;
     END IF;
