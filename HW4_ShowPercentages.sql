@@ -99,19 +99,7 @@ DELIMITER //
                      ' FROM StudentScores WHERE sid = ',
 		     '?');*/
 
-        /*SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, Assignments.Score AS Score, Assignments.AName AS AName
-                             FROM HW4_Student, Assignments
-                             WHERE HW4_Student.SID = Assignments.SID) ', 'SELECT sid, LName, FName, Sec, ',
-                     @sql,
-                     ' FROM StudentScores WHERE sid = ',
-		     '?');*/
-        
-       /* SET @sql = CONCAT('WITH StudentScores AS (SELECT HW4_Student.SID AS SID, HW4_Student.LName AS LName, HW4_Student.FName AS FName, HW4_Student.Sec AS Sec, HW4_RawScore.Score AS Score, HW4_RawScore.AName AS AName
-                             FROM HW4_Student, HW4_RawScore
-                             WHERE HW4_Student.SID = HW4_RawScore.SID) ', 'SELECT sid, LName, FName, Sec, ',
-                     @sql,
-                     ' FROM StudentScores WHERE sid = ',
-		     '?');*/
+
        
 
         -- alert the server we have a statement shell to set up
