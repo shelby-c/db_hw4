@@ -1,4 +1,5 @@
- <head><title>HW4 Show All Course Averages</title></head>
+  <!-- Shelby Coe (scoe4) !>
+<head><title>HW4 Show All Course Averages</title></head>
  <body>
 <?php 
     echo "<h2>HW4 Show All Course Averages</h2>";

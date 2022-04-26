@@ -1,4 +1,6 @@
 -- ShowPercentages.sql
+
+-- Shelby Coe (scoe4)
 /*
 Given a single SID identifier, display a single student’s percentage (not raw) scores for 
 each assignment given in the HW4 Assignment table, and a single weighted course average (a percentage). 
